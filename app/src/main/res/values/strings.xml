@@ -2,6 +2,6 @@
     <string name="app_name">Popular Movies, Stage 1</string>
     <string name="default_info_text">Default info text</string>
     <string name="error_message">An error has occured.</string>
-    <string name="sort_toggle">Descending</string>
+    <string name="sort_toggle">Top Rated</string>
     <string name="app_label">Popular Movies</string>
 </resources>

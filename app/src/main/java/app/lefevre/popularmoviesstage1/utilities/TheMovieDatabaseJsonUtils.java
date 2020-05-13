@@ -2,6 +2,7 @@ package app.lefevre.popularmoviesstage1.utilities;
 
 import android.content.Context;
 
+import app.lefevre.popularmoviesstage1.Movie;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -10,16 +11,16 @@ import java.net.HttpURLConnection;
 
 public class TheMovieDatabaseJsonUtils {
 
-    public static String[] getSimpleMovieStringsFromJson(Context context, String movieJsonStr)
+    public static Movie[] getMovieFromJson(Context context, String movieJsonStr)
             throws JSONException {
 
         final String TMDB_RESULTS = "results";
 
+        final String TMDB_ID = "id";
         final String TMDB_TITLE = "title";
+        final String TMDB_POSTER = "poster_path";
 
         final String TMDB_MESSAGE_CODE = "An error occurred. Please wait and try again later.";
-
-        String[] parsedMovieData = null;
 
         JSONObject movieJson = new JSONObject(movieJsonStr);
 
@@ -41,19 +42,22 @@ public class TheMovieDatabaseJsonUtils {
 
         JSONArray movieArray = movieJson.getJSONArray(TMDB_RESULTS);
 
-        parsedMovieData = new String[movieArray.length()];
+        Movie[] movieListFromJSON = new Movie[movieArray.length()];
 
         for (int i=0; i < movieArray.length(); i++) {
-            String title;
+            Integer id;
+            String poster;
 
             JSONObject movie = movieArray.getJSONObject(i);
 
-            title = movie.optString(TMDB_TITLE);
+            id = movie.optInt(TMDB_ID);
+            poster = movie.optString(TMDB_POSTER);
 
-            parsedMovieData[i] = title;
+            movieListFromJSON[i] = new Movie(id, poster);
+
         }
 
-        return parsedMovieData;
+        return movieListFromJSON;
 
     }
 }

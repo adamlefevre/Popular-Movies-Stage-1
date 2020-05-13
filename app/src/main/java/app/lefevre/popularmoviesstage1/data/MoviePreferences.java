@@ -5,7 +5,7 @@ import android.content.Context;
 public class MoviePreferences {
 
     final static String apiKey = "041c6eed18b182419301192512ecd44c";
-    final static String searchBy = "popular";
+    final static String searchBy = "popularity.desc";
 
     public static String getApiKey(Context context) {
         return apiKey;

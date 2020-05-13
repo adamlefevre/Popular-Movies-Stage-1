@@ -30,28 +30,21 @@ import java.util.Scanner;
  */
 public class NetworkUtils {
 
-    final static String TMDB_BASE_URL =
-            "https://api.themoviedb.org/3/movie/";
-    final static String PATH_ENDPOINT = "popular";
+    final static String TMDB_BASE_URL = "https://api.themoviedb.org/3/discover/movie";
 
     final static String PARAM_APIKEY = "api_key";
 
-    /*
-     * The sort field. One of stars, forks, or updated.
-     * Default: results are sorted by best match if no field is specified.
-     */
-    final static String PARAM_SORT = "sort";
-    final static String sortBy = "stars";
+    final static String PARAM_SORT = "sortBy";
 
     /**
      * Builds the URL used to query The Movie Database.
      *
      * @param apiKey The keyword that will be queried for.
-     * @return The URL to use to query the GitHub server.
+     * @return The URL to use to query the TMDB server.
      */
-    public static URL buildUrl(String apiKey) {
+    public static URL buildUrl(String apiKey, String endpoint) {
         Uri builtUri = Uri.parse(TMDB_BASE_URL).buildUpon()
-                .appendPath(PATH_ENDPOINT)
+                .appendQueryParameter(PARAM_SORT, endpoint)
                 .appendQueryParameter(PARAM_APIKEY, apiKey)
                 .build();
 
@@ -63,6 +56,19 @@ public class NetworkUtils {
         }
 
         return url;
+    }
+
+    /**
+     * Builds the URL used to talk to the weather server using latitude and longitude of a
+     * location.
+     *
+     * @param lat The latitude of the location
+     * @param lon The longitude of the location
+     * @return The Url to use to query the weather server.
+     */
+    public static URL buildUrl(Double lat, Double lon) {
+        /** This will be implemented in a future lesson **/
+        return null;
     }
 
     /**
