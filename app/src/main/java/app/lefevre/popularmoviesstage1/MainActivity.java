@@ -65,8 +65,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     @Override
     public void onClick(Movie movieDetails) {
         Context context = this;
-        Toast.makeText(context, movieDetails.id, Toast.LENGTH_SHORT)
-                .show();
+        Toast.makeText(context, movieDetails.id, Toast.LENGTH_SHORT).show();
     }
 
     private void showMovieDataView() {
@@ -116,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
                         .getResponseFromHttpUrl(movieRequestUrl);
 
                 Movie[] movieData = TheMovieDatabaseJsonUtils
-                        .getMovieFromJson(MainActivity.this, jsonMovieResponse);
+                        .getMoviesFromJson(MainActivity.this, jsonMovieResponse);
 
                 return movieData;
 

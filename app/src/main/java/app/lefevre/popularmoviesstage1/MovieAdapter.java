@@ -1,16 +1,19 @@
 package app.lefevre.popularmoviesstage1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.posterViewHolder> {
+
+    private static final String TAG = "PopularMovies";
 
     private Movie[] mMovieData;
 
@@ -60,7 +63,12 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.posterViewHo
     public void onBindViewHolder(posterViewHolder holder, int position) {
         Movie singleMovie = mMovieData[position];
 
-        Picasso.get().load("http://image.tmdb.org/t/p/w185" + singleMovie.posterUrl).into(holder.mPosterImageView);
+        Picasso.get()
+                .load("https://image.tmdb.org/t/p/w185" + singleMovie.posterUrl)
+                //.placeholder(R.drawable.film_download_clip_art_free)
+                //.centerCrop()
+                //.resize(185,278)
+                .into(holder.mPosterImageView);
 
     }
 

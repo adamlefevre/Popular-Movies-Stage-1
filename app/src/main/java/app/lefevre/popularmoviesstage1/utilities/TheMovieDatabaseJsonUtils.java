@@ -11,7 +11,7 @@ import java.net.HttpURLConnection;
 
 public class TheMovieDatabaseJsonUtils {
 
-    public static Movie[] getMovieFromJson(Context context, String movieJsonStr)
+    public static Movie[] getMoviesFromJson(Context context, String movieJsonStr)
             throws JSONException {
 
         final String TMDB_RESULTS = "results";

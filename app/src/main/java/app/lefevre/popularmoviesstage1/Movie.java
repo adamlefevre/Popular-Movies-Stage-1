@@ -18,10 +18,6 @@ public class Movie implements Serializable {
     Float voteAverage;
     Date releaseDate;
 
-    public Movie() {
-
-    }
-
     public Movie(Integer id, String posterUrl) {
         this.id = id;
         this.posterUrl = posterUrl;
