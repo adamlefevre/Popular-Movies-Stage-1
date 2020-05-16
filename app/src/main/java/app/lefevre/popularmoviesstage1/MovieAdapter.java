@@ -68,6 +68,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.posterViewHo
                 //.placeholder(R.drawable.film_download_clip_art_free)
                 //.centerCrop()
                 //.resize(185,278)
+                .fit()
                 .into(holder.mPosterImageView);
 
     }

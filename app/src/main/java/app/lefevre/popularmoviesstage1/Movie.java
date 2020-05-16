@@ -11,15 +11,25 @@ public class Movie implements Serializable {
     //Second activity can make another API call to get additional details
     Integer id;
     String posterUrl;
-
+    String backdropUrl;
+    String tagline;
     String title;
-    String posterThumbnail;
     String overview;
-    Float voteAverage;
-    Date releaseDate;
+    Double voteAverage;
+    String releaseDate;
 
     public Movie(Integer id, String posterUrl) {
         this.id = id;
         this.posterUrl = posterUrl;
+    }
+
+    public Movie(String poster, String backdrop, String tagline, String title, String overview, Double voteAverage, String releaseDate) {
+        this.posterUrl = poster;
+        this.backdropUrl = backdrop;
+        this.tagline = tagline;
+        this.title = title;
+        this.overview = overview;
+        this.voteAverage = voteAverage;
+        this.releaseDate = releaseDate;
     }
 }

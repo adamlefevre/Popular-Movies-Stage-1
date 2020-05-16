@@ -36,6 +36,8 @@ public class NetworkUtils {
 
     final static String PARAM_SORT = "sortBy";
 
+    final static String PARAM_ID = "movie_id";
+
     /**
      * Builds the URL used to query The Movie Database.
      *
@@ -66,9 +68,20 @@ public class NetworkUtils {
      * @param lon The longitude of the location
      * @return The Url to use to query the weather server.
      */
-    public static URL buildUrl(Double lat, Double lon) {
-        /** This will be implemented in a future lesson **/
-        return null;
+    public static URL buildUrl(String apiKey, Integer id) {
+        Uri builtUri = Uri.parse(TMDB_BASE_URL).buildUpon()
+                .appendQueryParameter(PARAM_APIKEY, apiKey)
+                .appendQueryParameter(PARAM_ID, id.toString())
+                .build();
+
+        URL url = null;
+        try {
+            url = new URL(builtUri.toString());
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        }
+
+        return url;
     }
 
     /**

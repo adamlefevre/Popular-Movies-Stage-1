@@ -1,6 +1,7 @@
 package app.lefevre.popularmoviesstage1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -9,7 +10,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.*;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import app.lefevre.popularmoviesstage1.MovieAdapter.MovieAdapterOnClickHandler;
 import app.lefevre.popularmoviesstage1.data.MoviePreferences;
@@ -56,19 +56,25 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     }
 
     private void loadMovieData(String searchBy) {
-        showMovieDataView();
+        showMoviePosters();
 
         String apiKey = MoviePreferences.getApiKey(this);
-        new FetchMovieTask().execute(apiKey, searchBy);
+        new FetchMoviesTask().execute(apiKey, searchBy);
     }
 
     @Override
     public void onClick(Movie movieDetails) {
         Context context = this;
-        Toast.makeText(context, movieDetails.id, Toast.LENGTH_SHORT).show();
+        Class destinationClass = DetailActivity.class;
+
+        Intent intentToStartDetailActivity = new Intent(context, destinationClass);
+        intentToStartDetailActivity.putExtra("MovieId", movieDetails.id);
+
+        startActivity(intentToStartDetailActivity);
+
     }
 
-    private void showMovieDataView() {
+    private void showMoviePosters() {
         /* First, make sure the error is invisible */
         mErrorMessageDisplay.setVisibility(View.INVISIBLE);
         /* Then, make sure the weather data is visible */
@@ -89,7 +95,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
-    public class FetchMovieTask extends AsyncTask<String, Void, Movie[]> {
+    public class FetchMoviesTask extends AsyncTask<String, Void, Movie[]> {
 
         @Override
         protected void onPreExecute() {
@@ -129,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         protected void onPostExecute(Movie[] movieData) {
             mLoadingIndicator.setVisibility(View.INVISIBLE);
             if (movieData != null) {
-                showMovieDataView();
+                showMoviePosters();
                 mMovieAdapter.setMovieData(movieData);
             } else {
                 showErrorMessage();
