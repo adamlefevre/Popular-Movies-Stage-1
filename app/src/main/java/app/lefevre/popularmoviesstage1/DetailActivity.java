@@ -57,7 +57,6 @@ public class DetailActivity extends AppCompatActivity {
             if (intentThatStartedThisActivity.hasExtra("MovieId")) {
                 mMovieId = intentThatStartedThisActivity.getIntExtra("MovieId", 475557);
                 loadMovieData(mMovieId);
-                //mTitle.setText(mMovieId);
             }
         }
 

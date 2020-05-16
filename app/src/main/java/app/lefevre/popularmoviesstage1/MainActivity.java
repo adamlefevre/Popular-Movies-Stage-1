@@ -26,7 +26,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
     private ProgressBar mLoadingIndicator;
 
-    private String searchBy;
+    private String sortBy = MoviePreferences.getSortBy(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,15 +51,17 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
         mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
 
-        searchBy = MoviePreferences.getSearchBy(this);
-        loadMovieData(searchBy);
+        loadMovieData(sortBy);
     }
 
-    private void loadMovieData(String searchBy) {
+    private void loadMovieData(String sortBy) {
         showMoviePosters();
 
         String apiKey = MoviePreferences.getApiKey(this);
-        new FetchMoviesTask().execute(apiKey, searchBy);
+
+        QueryParams myQueryParams = new QueryParams(apiKey, sortBy);
+
+        new FetchMoviesTask().execute(myQueryParams);
     }
 
     @Override
@@ -95,7 +97,7 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         mErrorMessageDisplay.setVisibility(View.VISIBLE);
     }
 
-    public class FetchMoviesTask extends AsyncTask<String, Void, Movie[]> {
+    public class FetchMoviesTask extends AsyncTask<QueryParams, Void, Movie[]> {
 
         @Override
         protected void onPreExecute() {
@@ -104,17 +106,17 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         }
 
         @Override
-        protected Movie[] doInBackground(String... params) {
+        protected Movie[] doInBackground(QueryParams... params) {
 
             /* If there are no movies, there's nothing to look up. */
             if (params.length == 0) {
                 return null;
             }
 
-            String apiKey = params[0];
-            String searchBy = params[1];
+            String apiKey = params[0].myApiKey;
+            String sortBy = params[0].mySortBy;
 
-            URL movieRequestUrl = NetworkUtils.buildUrl(apiKey, searchBy);
+            URL movieRequestUrl = NetworkUtils.buildUrl(apiKey, sortBy);
 
             try {
                 String jsonMovieResponse = NetworkUtils
@@ -143,6 +145,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         }
     }
 
+    private static class QueryParams {
+        String myApiKey;
+        String mySortBy;
+
+        QueryParams(String apiKey, String sortBy) {
+            this.myApiKey = apiKey;
+            this.mySortBy = sortBy;
+        }
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -166,10 +178,10 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     private void sortHelper(MenuItem item) {
         if (item.getTitle().equals("Popular")) {
             item.setTitle("Top Rated");
-            searchBy = "vote_average.desc";
+            sortBy = "vote_average.desc";
         } else {
             item.setTitle("Popular");
-            searchBy = "popularity.desc";
+            sortBy = "popularity.desc";
         }
 
         mMovieAdapter.notifyDataSetChanged();
