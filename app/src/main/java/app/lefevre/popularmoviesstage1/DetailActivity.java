@@ -151,17 +151,15 @@ public class DetailActivity extends AppCompatActivity {
             if (movie != null) {
                 showMovieDataView();
 
-                //getSupportActionBar().setTitle(movie.title);
-
-                Picasso.get().load("https://image.tmdb.org/t/p/w500" + movie.backdropUrl).into(mBackdrop);
+                Picasso.get().load("https://image.tmdb.org/t/p/original" + movie.backdropUrl).into(mBackdrop);
                 Picasso.get().load("https://image.tmdb.org/t/p/w185" + movie.posterUrl).into(mPoster);
-                mTagline.setText(movie.tagline);
-                mTitle.setText(movie.title);
-                mOverview.setText(movie.overview);
-                mVoteAverage.setText(movie.voteAverage.toString());
-                mReleaseDate.setText(movie.releaseDate);
+                mTagline.append("\n" + movie.tagline);
+                mTitle.append(" " + movie.title);
+                mOverview.append(" " + movie.overview);
+                mVoteAverage.append(" " + movie.voteAverage.toString());
+                mReleaseDate.append(" " + movie.releaseDate);
 
-                //Log.i(TAG, (String) mTitle.getText());
+                getSupportActionBar().setTitle(movie.title);
 
             } else {
                 showErrorMessage();

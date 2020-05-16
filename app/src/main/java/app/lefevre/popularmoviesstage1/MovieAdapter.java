@@ -1,9 +1,7 @@
 package app.lefevre.popularmoviesstage1;
 
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -12,8 +10,6 @@ import android.widget.ImageView;
 import com.squareup.picasso.Picasso;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.posterViewHolder> {
-
-    private static final String TAG = "PopularMovies";
 
     private Movie[] mMovieData;
 
@@ -65,9 +61,6 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.posterViewHo
 
         Picasso.get()
                 .load("https://image.tmdb.org/t/p/w185" + singleMovie.posterUrl)
-                //.placeholder(R.drawable.film_download_clip_art_free)
-                //.centerCrop()
-                //.resize(185,278)
                 .fit()
                 .into(holder.mPosterImageView);
 

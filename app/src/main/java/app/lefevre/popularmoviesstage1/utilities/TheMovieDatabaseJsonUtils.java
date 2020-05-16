@@ -3,6 +3,7 @@ package app.lefevre.popularmoviesstage1.utilities;
 import android.content.ContentValues;
 import android.content.Context;
 
+import android.util.Log;
 import app.lefevre.popularmoviesstage1.Movie;
 import org.json.JSONArray;
 import org.json.JSONException;

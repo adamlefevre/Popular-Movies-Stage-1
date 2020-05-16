@@ -16,6 +16,7 @@
 package app.lefevre.popularmoviesstage1.utilities;
 
 import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -30,11 +31,15 @@ import java.util.Scanner;
  */
 public class NetworkUtils {
 
-    final static String TMDB_BASE_URL = "https://api.themoviedb.org/3/discover/movie";
+    private static final String TAG = "PopularMovies";
+
+    final static String TMDB_BASE_URL = "https://api.themoviedb.org/3/";
+    final static String PATH_DISCOVER = "discover";
+    final static String PATH_MOVIE = "movie";
 
     final static String PARAM_APIKEY = "api_key";
 
-    final static String PARAM_SORT = "sortBy";
+    final static String PARAM_SORT = "sort_by";
 
     final static String PARAM_ID = "movie_id";
 
@@ -46,6 +51,8 @@ public class NetworkUtils {
      */
     public static URL buildUrl(String apiKey, String endpoint) {
         Uri builtUri = Uri.parse(TMDB_BASE_URL).buildUpon()
+                .appendPath(PATH_DISCOVER)
+                .appendPath(PATH_MOVIE)
                 .appendQueryParameter(PARAM_SORT, endpoint)
                 .appendQueryParameter(PARAM_APIKEY, apiKey)
                 .build();
@@ -64,14 +71,15 @@ public class NetworkUtils {
      * Builds the URL used to talk to the weather server using latitude and longitude of a
      * location.
      *
-     * @param lat The latitude of the location
-     * @param lon The longitude of the location
-     * @return The Url to use to query the weather server.
+     * @param apiKey The apiKey required
+     * @param id The movie_id required
+     * @return The Url to use to query TMDB.
      */
     public static URL buildUrl(String apiKey, Integer id) {
         Uri builtUri = Uri.parse(TMDB_BASE_URL).buildUpon()
+                .appendPath(PATH_MOVIE)
+                .appendPath(id.toString())
                 .appendQueryParameter(PARAM_APIKEY, apiKey)
-                .appendQueryParameter(PARAM_ID, id.toString())
                 .build();
 
         URL url = null;
