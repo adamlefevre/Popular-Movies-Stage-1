@@ -5,14 +5,14 @@ import android.content.Context;
 public class MoviePreferences {
 
     final static String apiKey = "";
-    final static String sortBy = "popularity.desc";
+    final static String endpoint = "popular";
 
     public static String getApiKey(Context context) {
         return apiKey;
     }
 
-    public static String getSortBy(Context context) {
-        return sortBy;
+    public static String getEndpoint(Context context) {
+        return endpoint;
     }
 
 }

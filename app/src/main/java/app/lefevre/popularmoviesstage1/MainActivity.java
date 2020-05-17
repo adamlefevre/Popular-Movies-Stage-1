@@ -26,16 +26,16 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
     private ProgressBar mLoadingIndicator;
 
-    private String sortBy = MoviePreferences.getSortBy(this);
+    private String endpoint = MoviePreferences.getEndpoint(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        recyclerView = (RecyclerView) findViewById(R.id.rv_posters);
+        recyclerView = findViewById(R.id.rv_posters);
 
-        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
+        mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
 
         // use this setting to improve performance if you know that changes
         // in content do not change the layout size of the RecyclerView
@@ -49,9 +49,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
         mMovieAdapter = new MovieAdapter(this);
         recyclerView.setAdapter(mMovieAdapter);
 
-        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
-        loadMovieData(sortBy);
+        loadMovieData(endpoint);
     }
 
     private void loadMovieData(String sortBy) {
@@ -114,9 +114,9 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
             }
 
             String apiKey = params[0].myApiKey;
-            String sortBy = params[0].mySortBy;
+            String endpoint = params[0].myEndpoint;
 
-            URL movieRequestUrl = NetworkUtils.buildUrl(apiKey, sortBy);
+            URL movieRequestUrl = NetworkUtils.buildUrl(apiKey, endpoint);
 
             try {
                 String jsonMovieResponse = NetworkUtils
@@ -147,11 +147,11 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
 
     private static class QueryParams {
         String myApiKey;
-        String mySortBy;
+        String myEndpoint;
 
         QueryParams(String apiKey, String sortBy) {
             this.myApiKey = apiKey;
-            this.mySortBy = sortBy;
+            this.myEndpoint = sortBy;
         }
     }
 
@@ -176,14 +176,17 @@ public class MainActivity extends AppCompatActivity implements MovieAdapterOnCli
     }
 
     private void sortHelper(MenuItem item) {
-        if (item.getTitle().equals("Popular")) {
-            item.setTitle("Top Rated");
-            sortBy = "vote_average.desc";
-        } else {
+        //Sets the activity title to the new endpoint and toggles the menuItem title
+        if (item.getTitle().equals("Top Rated")) {
+            getSupportActionBar().setTitle("Top Rated Movies");
             item.setTitle("Popular");
-            sortBy = "popularity.desc";
+            endpoint = "top_rated";
+        } else {
+            getSupportActionBar().setTitle("Popular Movies");
+            item.setTitle("Top Rated");
+            endpoint = "popular";
         }
 
-        mMovieAdapter.notifyDataSetChanged();
+        loadMovieData(endpoint);
     }
 }

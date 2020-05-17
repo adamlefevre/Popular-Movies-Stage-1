@@ -34,14 +34,9 @@ public class NetworkUtils {
     private static final String TAG = "PopularMovies";
 
     final static String TMDB_BASE_URL = "https://api.themoviedb.org/3/";
-    final static String PATH_DISCOVER = "discover";
     final static String PATH_MOVIE = "movie";
 
     final static String PARAM_APIKEY = "api_key";
-
-    final static String PARAM_SORT = "sort_by";
-
-    final static String PARAM_ID = "movie_id";
 
     /**
      * Builds the URL used to query The Movie Database.
@@ -51,9 +46,8 @@ public class NetworkUtils {
      */
     public static URL buildUrl(String apiKey, String endpoint) {
         Uri builtUri = Uri.parse(TMDB_BASE_URL).buildUpon()
-                .appendPath(PATH_DISCOVER)
                 .appendPath(PATH_MOVIE)
-                .appendQueryParameter(PARAM_SORT, endpoint)
+                .appendPath(endpoint)
                 .appendQueryParameter(PARAM_APIKEY, apiKey)
                 .build();
 

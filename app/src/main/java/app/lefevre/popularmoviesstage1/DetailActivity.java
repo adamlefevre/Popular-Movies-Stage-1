@@ -38,18 +38,18 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        mPoster = (ImageView) findViewById(R.id.movie_poster);
-        mBackdrop = (ImageView) findViewById(R.id.movie_backdrop);
-        mTagline = (TextView) findViewById(R.id.tv_movie_tagline);
-        mTitle = (TextView) findViewById(R.id.tv_movie_title);
-        mOverview = (TextView) findViewById(R.id.tv_movie_overview);
-        mVoteAverage = (TextView) findViewById(R.id.tv_movie_vote_average);
-        mReleaseDate = (TextView) findViewById(R.id.tv_movie_release_date);
+        mPoster = findViewById(R.id.movie_poster);
+        mBackdrop = findViewById(R.id.movie_backdrop);
+        mTagline = findViewById(R.id.tv_movie_tagline);
+        mTitle = findViewById(R.id.tv_movie_title);
+        mOverview = findViewById(R.id.tv_movie_overview);
+        mVoteAverage = findViewById(R.id.tv_movie_vote_average);
+        mReleaseDate = findViewById(R.id.tv_movie_release_date);
 
         /* This TextView is used to display errors and will be hidden if there are no errors */
-        mErrorMessageDisplay = (TextView) findViewById(R.id.tv_error_message_display);
+        mErrorMessageDisplay = findViewById(R.id.tv_error_message_display);
 
-        mLoadingIndicator = (ProgressBar) findViewById(R.id.pb_loading_indicator);
+        mLoadingIndicator = findViewById(R.id.pb_loading_indicator);
 
         Intent intentThatStartedThisActivity = getIntent();
 
